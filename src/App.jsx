@@ -1,7 +1,7 @@
 import ConfirmationModalWindow from './ConfirmationModalWindow.jsx';
 import StartWindow from './StartWindow.jsx';
 import { useState } from 'react';
-
+import './App.css'
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   function openModal() {
@@ -14,7 +14,7 @@ function App() {
   return (
     <div>
       {isOpenModal ? (
-        <ConfirmationModalWindow onClick={closeModal} />
+        <ConfirmationModalWindow onClick={closeModal} isOpenModal={isOpenModal}/>
       ) : (
         <StartWindow onClick={openModal} />
       )}

@@ -1,8 +1,8 @@
 import Button from './Button.jsx';
 import ReusableModalWindow from './ReusableModalWindow.jsx';
  
-function ConfirmationModalWindow({onClick}) {
-  return <ReusableModalWindow title="confirmation modal" onClick={onClick}>
+function ConfirmationModalWindow({onClick, isOpenModal}) {
+  return <ReusableModalWindow title="Confirmation modal" onClick={onClick} isOpenModal={isOpenModal}>
     <p>Are you sure you proceed? its cannot be undone</p>
     <Button text='Cancel' variant='inactive' onClick={onClick}/>
     <Button text='Yes, I agree' onClick={()=> alert('You confirm this action.')} />
