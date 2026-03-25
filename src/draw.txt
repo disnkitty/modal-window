@@ -1,0 +1,71 @@
+import ConfirmationModalWindow from './ConfirmationModalWindow.jsx';
+import StartWindow from './StartWindow.jsx';
+import { useState } from 'react';
+
+function App() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  function openModal() {
+    setIsOpenModal(true);
+  }
+  function closeModal() {
+    setIsOpenModal(false);
+  }
+
+  return (
+    <div>
+      {isOpenModal ? (
+        <ConfirmationModalWindow onClick={closeModal} />
+      ) : (
+        <StartWindow onClick={openModal} />
+      )}
+    </div>
+  );
+}
+
+export default App;
+function Button({ text, variant = 'active', onClick}) {
+  return (
+    <button onClick = {onClick} className={'button' (variant && ` button--${variant}`)}>
+      {text}
+    </button>
+  );
+}
+
+export default Button;
+import Button from './Button.jsx';
+import ReusableModalWindow from './ReusableModalWindow.jsx';
+ 
+function ConfirmationModalWindow({onClick}) {
+  return <ReusableModalWindow title="confirmation modal" onClick={onClick}>
+    <p>Are you sure you proceed? its cannot be undone</p>
+    <Button text='Cancel' variant='inactive' onClick={onClick}/>
+    <Button text='Yes, I agree' onClick={()=> alert('You confirm this action.')} />
+  </ReusableModalWindow>;
+}
+
+export default ConfirmationModalWindow;
+function ReusableModalWindow({ title, children, onClick }) {
+  return (
+    <div className="modal-overlay">
+      <div className="modal-overlay__content">
+      <button className="close-button" onClick={onClick}>закрыть</button>
+        {title && <h2 className="modal-overlay__title">{title}</h2>}
+        {children}
+      </div>
+    </div>
+  );
+}
+export default ReusableModalWindow;
+import Button from './Button.jsx';
+
+function StartWindow({onClick}) {
+  
+  return (
+    <div className="start-window-content">
+      <p className='start-window-content__title'>Universal Modal Component</p>
+      <Button text="Open Modal" onClick={onClick} />
+    </div>
+  );
+}
+
+export default StartWindow;
