@@ -1,7 +1,7 @@
 import ConfirmationModalWindow from './ConfirmationModalWindow.jsx';
 import StartWindow from './StartWindow.jsx';
 import { useState } from 'react';
-
+import './App.css'
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   function openModal() {
@@ -14,7 +14,7 @@ function App() {
   return (
     <div>
       {isOpenModal ? (
-        <ConfirmationModalWindow onClick={closeModal} />
+        <ConfirmationModalWindow onClick={closeModal} isOpenModal={isOpenModal}/>
       ) : (
         <StartWindow onClick={openModal} />
       )}
@@ -25,7 +25,7 @@ function App() {
 export default App;
 function Button({ text, variant = 'active', onClick}) {
   return (
-    <button onClick = {onClick} className={'button' (variant && ` button--${variant}`)}>
+    <button onClick = {onClick} className={`button ${variant ? `button--${variant}` : ''}`}>
       {text}
     </button>
   );
@@ -35,8 +35,8 @@ export default Button;
 import Button from './Button.jsx';
 import ReusableModalWindow from './ReusableModalWindow.jsx';
  
-function ConfirmationModalWindow({onClick}) {
-  return <ReusableModalWindow title="confirmation modal" onClick={onClick}>
+function ConfirmationModalWindow({onClick, isOpenModal}) {
+  return <ReusableModalWindow title="Confirmation modal" onClick={onClick} isOpenModal={isOpenModal}>
     <p>Are you sure you proceed? its cannot be undone</p>
     <Button text='Cancel' variant='inactive' onClick={onClick}/>
     <Button text='Yes, I agree' onClick={()=> alert('You confirm this action.')} />
@@ -44,11 +44,15 @@ function ConfirmationModalWindow({onClick}) {
 }
 
 export default ConfirmationModalWindow;
-function ReusableModalWindow({ title, children, onClick }) {
+function ReusableModalWindow({ title, children, onClick, isOpenModal }) {
   return (
-    <div className="modal-overlay">
+    <div
+      className={`modal-overlay ${isOpenModal ? 'modal-overlay--open' : ''}`}
+    >
       <div className="modal-overlay__content">
-      <button className="close-button" onClick={onClick}>закрыть</button>
+        <button className="close-button" onClick={onClick}>
+          &times;
+        </button>
         {title && <h2 className="modal-overlay__title">{title}</h2>}
         {children}
       </div>
